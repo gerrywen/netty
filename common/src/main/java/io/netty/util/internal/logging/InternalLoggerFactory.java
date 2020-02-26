@@ -35,6 +35,7 @@ import io.netty.util.internal.ObjectUtil;
  */
 public abstract class InternalLoggerFactory {
 
+    // 内部日志抽象工厂类,volatile可见性
     private static volatile InternalLoggerFactory defaultFactory;
 
     @SuppressWarnings("UnusedCatchParameter")
@@ -63,6 +64,9 @@ public abstract class InternalLoggerFactory {
     /**
      * Returns the default factory.  The initial default factory is
      * {@link JdkLoggerFactory}.
+     *
+     * 返回默认工厂。初始的默认工厂是
+     * {@link JdkLoggerFactory}。
      */
     public static InternalLoggerFactory getDefaultFactory() {
         if (defaultFactory == null) {
@@ -73,6 +77,8 @@ public abstract class InternalLoggerFactory {
 
     /**
      * Changes the default factory.
+     *
+     * 设置默认工厂。
      */
     public static void setDefaultFactory(InternalLoggerFactory defaultFactory) {
         InternalLoggerFactory.defaultFactory = ObjectUtil.checkNotNull(defaultFactory, "defaultFactory");
@@ -80,6 +86,8 @@ public abstract class InternalLoggerFactory {
 
     /**
      * Creates a new logger instance with the name of the specified class.
+     *
+     * 使用指定类的名称创建新的记录器实例。
      */
     public static InternalLogger getInstance(Class<?> clazz) {
         return getInstance(clazz.getName());
@@ -87,6 +95,7 @@ public abstract class InternalLoggerFactory {
 
     /**
      * Creates a new logger instance with the specified name.
+     * 创建具有指定名称的新记录器实例。
      */
     public static InternalLogger getInstance(String name) {
         return getDefaultFactory().newInstance(name);
@@ -94,6 +103,7 @@ public abstract class InternalLoggerFactory {
 
     /**
      * Creates a new logger instance with the specified name.
+     * 创建具有指定名称的新记录器实例。
      */
     protected abstract InternalLogger newInstance(String name);
 

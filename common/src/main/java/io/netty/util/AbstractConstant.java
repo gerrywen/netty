@@ -19,21 +19,27 @@ import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * Base implementation of {@link Constant}.
+ * {@link Constant}的基本实现。
  */
 public abstract class AbstractConstant<T extends AbstractConstant<T>> implements Constant<T> {
 
+    // juc Long原子性
     private static final AtomicLong uniqueIdGenerator = new AtomicLong();
+    // 唯一编号
     private final int id;
+    // 常量名称
     private final String name;
+    // cas原子安全
     private final long uniquifier;
 
     /**
      * Creates a new instance.
+     * 创建一个新实例。
      */
     protected AbstractConstant(int id, String name) {
         this.id = id;
         this.name = name;
-        this.uniquifier = uniqueIdGenerator.getAndIncrement();
+        this.uniquifier = uniqueIdGenerator.getAndIncrement(); // 自增+1
     }
 
     @Override

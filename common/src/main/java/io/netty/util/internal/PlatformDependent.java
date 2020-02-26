@@ -74,9 +74,15 @@ import static java.lang.Math.min;
  * <p>
  * You can disable the use of {@code sun.misc.Unsafe} if you specify
  * the system property <strong>io.netty.noUnsafe</strong>.
+ *
+ *
+ * 检测特定于当前运行时环境的各种属性的实用程序，例如Java版本和{@code sun.misc.Unsafe}可见性对象。
+ * <p>
+ * 您可以禁用{@code sun.misc.Unsafe}的使用。如果您指定系统属性<strong>io.netty.noUnsafe</strong>。
  */
 public final class PlatformDependent {
 
+    // 日志
     private static final InternalLogger logger = InternalLoggerFactory.getInstance(PlatformDependent.class);
 
     private static final Pattern MAX_DIRECT_MEMORY_SIZE_ARG_PATTERN = Pattern.compile(

@@ -29,8 +29,10 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public abstract class ConstantPool<T extends Constant<T>> {
 
+    // 线程安全map
     private final ConcurrentMap<String, T> constants = PlatformDependent.newConcurrentHashMap();
 
+    // juc 原子操作类默认为1
     private final AtomicInteger nextId = new AtomicInteger(1);
 
     /**
@@ -94,12 +96,18 @@ public abstract class ConstantPool<T extends Constant<T>> {
     /**
      * Creates constant by name or throws exception. Threadsafe
      *
+     * 按名称创建常量或抛出异常。线程安全的
+     *
      * @param name the name of the {@link Constant}
      */
     private T createOrThrow(String name) {
         T constant = constants.get(name);
         if (constant == null) {
             final T tempConstant = newConstant(nextId(), name);
+            // 当value为null的时候，putIfAbsent()方法会覆盖null值，直到value不为null为止
+            // 当value初始值不为null的时候，putIfAbsent()保证返回值始终是唯一的，并且是多线程安全的
+            // putIfAbsent()是有返回值的，应该对他的返回值进行非空判断
+            // 主要应用在单例模式中
             constant = constants.putIfAbsent(name, tempConstant);
             if (constant == null) {
                 return tempConstant;
@@ -121,6 +129,10 @@ public abstract class ConstantPool<T extends Constant<T>> {
 
     protected abstract T newConstant(int id, String name);
 
+    /**
+     * 原子自增+1
+     * @return
+     */
     @Deprecated
     public final int nextId() {
         return nextId.getAndIncrement();

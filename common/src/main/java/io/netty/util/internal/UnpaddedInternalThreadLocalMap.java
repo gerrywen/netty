@@ -32,11 +32,17 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 class UnpaddedInternalThreadLocalMap {
 
+    // ThreadLocal类并不是用来解决多线程环境下的共享变量问题，而是用来提供线程内部的共享变量，在多线程环境下，可以保证各个线程之间的变量互相隔离、相互独立
     static final ThreadLocal<InternalThreadLocalMap> slowThreadLocalMap = new ThreadLocal<InternalThreadLocalMap>();
+    // 原子类计数器
     static final AtomicInteger nextIndex = new AtomicInteger();
 
     /** Used by {@link FastThreadLocal} */
+    // 存放FastThreadLocal数组， FastThreadLocal的构造方法中，会为当前FastThreadLocal分配一个index，
+    // 这个index是由一个全局唯一的static类型的AtomInteger产生的，可以保证每个FastThreadLocal的index都不同
     Object[] indexedVariables;
+
+    // 成员变量
 
     // Core thread-locals
     int futureListenerStackDepth;
