@@ -209,6 +209,9 @@ public interface ChannelHandler {
      * This annotation is provided for documentation purpose, just like
      * <a href="http://www.javaconcurrencyinpractice.com/annotations/doc/">the JCIP annotations</a>.
      */
+    /**
+     * 如果我们确保我们的实例中不会出现竞态条件，那么就可以使用共享的。
+     */
     @Inherited
     @Documented
     @Target(ElementType.TYPE)

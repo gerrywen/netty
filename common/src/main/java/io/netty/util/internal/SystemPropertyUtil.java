@@ -23,6 +23,8 @@ import java.security.PrivilegedAction;
 
 /**
  * A collection of utility methods to retrieve and parse the values of the Java system properties.
+ *
+ * 检索和解析Java系统属性值的实用程序方法的集合。
  */
 public final class SystemPropertyUtil {
 
@@ -63,6 +65,7 @@ public final class SystemPropertyUtil {
 
         String value = null;
         try {
+            // SecurityManager 安全管理器是一个允许应用程序实现安全策略的类
             if (System.getSecurityManager() == null) {
                 value = System.getProperty(key);
             } else {
@@ -135,8 +138,10 @@ public final class SystemPropertyUtil {
             return def;
         }
 
+        // trim() 方法用于删除字符串的头尾空白符。
         value = value.trim();
         try {
+            // 整型
             return Integer.parseInt(value);
         } catch (Exception e) {
             // Ignore

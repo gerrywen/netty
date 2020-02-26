@@ -52,13 +52,13 @@ public final class EchoClient {
         }
 
         // Configure the client.
-        EventLoopGroup group = new NioEventLoopGroup();
+        EventLoopGroup group = new NioEventLoopGroup(); // (1)、 初始化用于连接及I/O工作的"线程池"；
         try {
-            Bootstrap b = new Bootstrap();
-            b.group(group)
-             .channel(NioSocketChannel.class)
-             .option(ChannelOption.TCP_NODELAY, true)
-             .handler(new ChannelInitializer<SocketChannel>() {
+            Bootstrap b = new Bootstrap();//(2)、 初始化Bootstrap实例， 此实例是netty客户端应用开发的入口
+            b.group(group)// (3)、 通过Bootstrap的group方法，设置（1）中初始化的"线程池"；
+             .channel(NioSocketChannel.class)// (4)、 指定通道channel的类型，由于是客户端，故而是NioSocketChannel；
+             .option(ChannelOption.TCP_NODELAY, true)// (5)、 设置SocketChannel的选项
+             .handler(new ChannelInitializer<SocketChannel>() {//(6)、 设置SocketChannel的处理器， 其内部是实际业务开发的"主战场"
                  @Override
                  public void initChannel(SocketChannel ch) throws Exception {
                      ChannelPipeline p = ch.pipeline();
@@ -71,7 +71,7 @@ public final class EchoClient {
              });
 
             // Start the client.
-            ChannelFuture f = b.connect(HOST, PORT).sync();
+            ChannelFuture f = b.connect(HOST, PORT).sync();// (7)、 连接指定的服务地址；
 
             // Wait until the connection is closed.
             f.channel().closeFuture().sync();

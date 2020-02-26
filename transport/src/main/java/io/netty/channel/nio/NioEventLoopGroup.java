@@ -39,6 +39,9 @@ public class NioEventLoopGroup extends MultithreadEventLoopGroup {
     /**
      * Create a new instance using the default number of threads, the default {@link ThreadFactory} and
      * the {@link SelectorProvider} which is returned by {@link SelectorProvider#provider()}.
+     *
+     * 使用默认的线程数、默认的{@link ThreadFactory}和{@link SelectorProvider}创建一个新实例，
+     * {@link SelectorProvider#provider()}返回{@link SelectorProvider}。
      */
     public NioEventLoopGroup() {
         this(0);
@@ -47,6 +50,8 @@ public class NioEventLoopGroup extends MultithreadEventLoopGroup {
     /**
      * Create a new instance using the specified number of threads, {@link ThreadFactory} and the
      * {@link SelectorProvider} which is returned by {@link SelectorProvider#provider()}.
+     *
+     * 使用指定数量的线程({@link ThreadFactory}和{@link SelectorProvider}返回的{@link SelectorProvider()}创建一个新实例。
      */
     public NioEventLoopGroup(int nThreads) {
         this(nThreads, (Executor) null);
@@ -69,6 +74,8 @@ public class NioEventLoopGroup extends MultithreadEventLoopGroup {
     }
 
     public NioEventLoopGroup(int nThreads, Executor executor) {
+        // SelectorProvider.provider() I/O多路复用选择器
+        // 不同操作系统的I/O多路复用选择器各自内核实现不同
         this(nThreads, executor, SelectorProvider.provider());
     }
 

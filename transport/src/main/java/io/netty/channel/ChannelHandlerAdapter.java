@@ -23,6 +23,8 @@ import java.util.Map;
 
 /**
  * Skeleton implementation of a {@link ChannelHandler}.
+ *
+ * 这个类是对ChannelHandler的基本实现，作为一个适配器，它并没有提供太多的功能，仅仅是处理了是否共享的问题。
  */
 public abstract class ChannelHandlerAdapter implements ChannelHandler {
 
@@ -41,6 +43,8 @@ public abstract class ChannelHandlerAdapter implements ChannelHandler {
     /**
      * Return {@code true} if the implementation is {@link Sharable} and so can be added
      * to different {@link ChannelPipeline}s.
+     *
+     * 如果实现是{@link Sharable}，则返回{@code true}，因此可以添加到不同的{@link ChannelPipeline}中。
      */
     public boolean isSharable() {
         /**
